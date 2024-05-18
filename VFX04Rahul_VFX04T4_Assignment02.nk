@@ -1,0 +1,65 @@
+#! C:/Program Files/Nuke13.0v2/nuke-13.0.2.dll -nx
+version 13.0 v2
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="-1" y="-9" w="1920" h="1001" maximized="1" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1257" stretch="1"/>
+            <splitter orientation="2">
+                <split size="563"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="396"/>
+                <dock id="" activePageId="DAG.1">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1" focus="true">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name "C:/Nuke Projects/Term4(Scripting)/Assignment02/VFX04Rahul_VFX04T4_Assignment02.nk"
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ monitorOutLUT rec709
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+Viewer {
+ inputs 0
+ frame 1
+ frame_range 1-100
+ name Viewer1
+ xpos -40
+ ypos -9
+}
+Transform {
+ inputs 0
+ center {1024 778}
+ name Transform1
+ selected true
+ xpos -43
+ ypos -102
+ addUserKnob {20 User}
+ addUserKnob {22 Smart_Knobs l "Smart Knobs" T "#sorting knobs in dictionary\nselected_knobs= \{\"rotate\":0, \"scale\":1,\"translate\":(0,0),\"motionblur\":0,\"center\":(1024,778)\}\nmy_knobs=sorted(selected_knobs.keys())\nsmart_knobs=\{\}\nfor key in my_knobs:\n    smart_knobs\[key]=selected_knobs\[key]\n\n#Creating boolean knobs\nfor i in smart_knobs.keys():\n    my_node=nuke.thisNode()\n    bol_knobs=nuke.Boolean_Knob(i+\"check\",i)\n    bol_knobs.setFlag(nuke.STARTLINE)\n    my_node.addKnob(bol_knobs)\n    bol_knobs.setValue(True)\n\nmy_node=nuke.thisNode()\nmy_node.knob(\"label\").setValue(\" \")\n\n#Assigning a variable to knobChanged\ncallback_node=my_node.knob(\"knobChanged\")\n\n\n#creating condition for knobchanged\ncallback_operation=\"\"\"\nmy_node = nuke.thisNode()\nmy_node.knob(\"label\").setValue(\" \")\n\nlabel_string=\" \"\nfor name,value in smart_knobs.items():\n#checking if the default value is different\n    if(my_node.knob(name).value()!=value ):\n\n#checking if the user created boolean knob for the knob in transform is on\n        if(my_node.knob(name+\"check\").value()):\n\n#assigning the changed knobs to variable\n            label_string=label_string+str(name)+\" : \"+ str(my_node.knob(name).value())+\"\\\\n\"\n\n#setting the value of label to value inside variable label string \nmy_node.knob(\"label\").setValue(str(label_string))\n\"\"\"\n\n#passing the condition to the knobchanged\ncallback_node.setValue(callback_operation)\n\n#disabling the python button\nmy_node.knob(\"Smart_Knobs\").setEnabled(False)\n\n#disabling the label\nmy_node.knob(\"label\").setEnabled(False)" +STARTLINE}
+}
