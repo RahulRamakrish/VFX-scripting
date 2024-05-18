@@ -1,0 +1,315 @@
+#! C:/Program Files/Nuke13.0v2/nuke-13.0.2.dll -nx
+version 13.0 v2
+Gizmo {
+ inputs 2
+ knobChanged "my_node=nuke.thisNode()\nstrength=my_node.knob(\"strength\")\ncheckbox=nuke.thisKnob()\nif (checkbox.name()==\"Soften\"):\n    if(checkbox.value()==True):\n        strength.setVisible(True)\n    else:\n        strength.setVisible(False)\n\nif (checkbox.name()==\"details\"):\n    my_node.knob(\"type_1\").setValue(\"fBm\")\n    my_node.knob(\"type_2\").setValue(\"fBm\")\n    my_node.knob(\"type_3\").setValue(\"fBm\")\n    my_node.knob(\"type_4\").setValue(\"fBm\")\n    my_node.knob(\"type_5\").setValue(\"fBm\")\n    intensity=\[\"intensity_1\", \"intensity_2\", \"intensity_3\", \"intensity_4\", \"intensity_5\",]\n    for i in intensity:\n        my_node.knob(i).setValue(my_node.knob(i).defaultValue())\n    size=\[\"size\", \"size_1\", \"size_2\", \"size_3\", \"size_4\"]\n    for s in size:\n        my_node.knob(s).setValue(my_node.knob(s).defaultValue())\n\n    if(checkbox.value()<1 or checkbox.value()>5):\n        checkbox.setValue(1)\n        nuke.message(\"Invalid input!\\nRange is between (1-5)\")\n\n        if(checkbox.value()==1):\n            my_node.knob(\"noise_1\").setVisible(True)\n            my_node.knob(\"noise_2\").setVisible(False)\n            my_node.knob(\"noise_3\").setVisible(False)\n            my_node.knob(\"noise_4\").setVisible(False)\n            my_node.knob(\"noise_5\").setVisible(False)\n\n    elif(checkbox.value()==1):\n        my_node.knob(\"noise_1\").setVisible(True)\n        my_node.knob(\"noise_2\").setVisible(False)\n        my_node.knob(\"noise_3\").setVisible(False)\n        my_node.knob(\"noise_4\").setVisible(False)\n        my_node.knob(\"noise_5\").setVisible(False)\n\n    elif(checkbox.value()==2):\n        my_node.knob(\"noise_1\").setVisible(True)\n        my_node.knob(\"noise_2\").setVisible(True)\n        my_node.knob(\"noise_3\").setVisible(False)\n        my_node.knob(\"noise_4\").setVisible(False)\n        my_node.knob(\"noise_5\").setVisible(False)\n\n    elif(checkbox.value()==3):\n        my_node.knob(\"noise_1\").setVisible(True)\n        my_node.knob(\"noise_2\").setVisible(True)\n        my_node.knob(\"noise_3\").setVisible(True)\n        my_node.knob(\"noise_4\").setVisible(False)\n        my_node.knob(\"noise_5\").setVisible(False)\n\n    elif(checkbox.value()==4):\n        my_node.knob(\"noise_1\").setVisible(True)\n        my_node.knob(\"noise_2\").setVisible(True)\n        my_node.knob(\"noise_3\").setVisible(True)\n        my_node.knob(\"noise_4\").setVisible(True)\n        my_node.knob(\"noise_5\").setVisible(False)\n\n    else:\n        my_node.knob(\"noise_1\").setVisible(True)\n        my_node.knob(\"noise_2\").setVisible(True)\n        my_node.knob(\"noise_3\").setVisible(True)\n        my_node.knob(\"noise_4\").setVisible(True)\n        my_node.knob(\"noise_5\").setVisible(True)"
+ addUserKnob {20 User}
+ addUserKnob {6 Soften l soften t "on of off the softening of the mask" +STARTLINE}
+ addUserKnob {14 strength t "increases the softness of the mask" +HIDDEN R 0 100}
+ addUserKnob {3 details l "distortion detail" t "determines the amount of noise details present"}
+ details 1
+ addUserKnob {20 noise_1 l "noise 1" n 1}
+ addUserKnob {41 type_1 l type t "Noise type" T Noise4.type}
+ addUserKnob {41 intensity_1 l intensity T IDistort3.uv_scale}
+ addUserKnob {41 size l x/ysize T Noise4.size}
+ addUserKnob {41 zoffset l z T Noise4.zoffset}
+ addUserKnob {41 lacunarity T Noise4.lacunarity}
+ addUserKnob {41 gain T Noise4.gain}
+ addUserKnob {41 gamma T Noise4.gamma}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 noise_2 l "noise 2" +HIDDEN n 1}
+ addUserKnob {41 type_2 l type t "Noise type" T Noise1.type}
+ addUserKnob {41 intensity_2 l intensity T IDistort1.uv_scale}
+ addUserKnob {41 size_1 l x/ysize T Noise1.size}
+ addUserKnob {41 zoffset_1 l z T Noise1.zoffset}
+ addUserKnob {41 lacunarity_1 l lacunarity T Noise1.lacunarity}
+ addUserKnob {41 gain_1 l gain T Noise1.gain}
+ addUserKnob {41 gamma_1 l gamma T Noise1.gamma}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 noise_3 l noise3 +HIDDEN n 1}
+ addUserKnob {41 type_3 l type t "Noise type" T Noise2.type}
+ addUserKnob {41 intensity_3 l intensity T IDistort2.uv_scale}
+ addUserKnob {41 size_2 l x/ysize T Noise2.size}
+ addUserKnob {41 zoffset_2 l z T Noise2.zoffset}
+ addUserKnob {41 lacunarity_2 l lacunarity T Noise2.lacunarity}
+ addUserKnob {41 gain_2 l gain T Noise2.gain}
+ addUserKnob {41 gamma_2 l gamma T Noise2.gamma}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {20 noise_4 l "noise 4" +HIDDEN n 1}
+ addUserKnob {41 type_4 l type t "Noise type" T Noise3.type}
+ addUserKnob {41 intensity_4 l intensity T IDistort4.uv_scale}
+ addUserKnob {41 size_3 l x/ysize T Noise3.size}
+ addUserKnob {41 zoffset_3 l z T Noise3.zoffset}
+ addUserKnob {41 lacunarity_3 l lacunarity T Noise3.lacunarity}
+ addUserKnob {41 gain_3 l gain T Noise3.gain}
+ addUserKnob {41 gamma_3 l gamma T Noise3.gamma}
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+ addUserKnob {20 noise_5 l "noise 5" +HIDDEN n 1}
+ addUserKnob {41 type_5 l type t "Noise type" T Noise5.type}
+ addUserKnob {41 intensity_5 l intensity T IDistort5.uv_scale}
+ addUserKnob {41 size_4 l x/ysize T Noise5.size}
+ addUserKnob {41 zoffset_4 l z T Noise5.zoffset}
+ addUserKnob {41 lacunarity_4 l lacunarity T Noise5.lacunarity}
+ addUserKnob {41 gain_4 l gain T Noise5.gain}
+ addUserKnob {41 gamma_4 l gamma T Noise5.gamma}
+ addUserKnob {20 endGroup_4 l endGroup n -1}
+ addUserKnob {6 color_rgba_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+ addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+}
+ Input {
+  inputs 0
+  name Mask
+  selected true
+  xpos 82
+  ypos 87
+ }
+ Dot {
+  name Dot1
+  xpos 116
+  ypos 258
+ }
+set N77f04c00 [stack 0]
+ Dot {
+  name Dot3
+  xpos 116
+  ypos 506
+ }
+set N77f04800 [stack 0]
+ Dot {
+  name Dot4
+  xpos 116
+  ypos 854
+ }
+set N77f04400 [stack 0]
+ Dot {
+  name Dot6
+  xpos 116
+  ypos 1273
+ }
+set N77e83c00 [stack 0]
+ Dot {
+  name Dot8
+  xpos 116
+  ypos 1681
+ }
+set N77e83800 [stack 0]
+ Dot {
+  name Dot10
+  xpos 116
+  ypos 1969
+ }
+push $N77e83800
+ Noise {
+  inputs 0
+  translate {130 -102}
+  center {960 540}
+  name Noise5
+  xpos 510
+  ypos 1586
+ }
+ Dot {
+  name Dot9
+  xpos 544
+  ypos 1681
+ }
+push $N77e83c00
+ Noise {
+  inputs 0
+  translate {130 -102}
+  center {960 540}
+  name Noise3
+  xpos 510
+  ypos 1178
+ }
+ Dot {
+  name Dot7
+  xpos 544
+  ypos 1273
+ }
+push $N77f04400
+ Noise {
+  inputs 0
+  translate {128 -100}
+  center {960 540}
+  name Noise2
+  xpos 510
+  ypos 759
+ }
+ Dot {
+  name Dot5
+  xpos 544
+  ypos 854
+ }
+push $N77f04800
+ Noise {
+  inputs 0
+  translate {130 -100}
+  center {960 540}
+  name Noise1
+  xpos 510
+  ypos 411
+ }
+ Dot {
+  name Dot2
+  xpos 544
+  ypos 506
+ }
+push $N77f04c00
+ Noise {
+  inputs 0
+  center {960 540}
+  name Noise4
+  xpos 509
+  ypos 163
+ }
+ Dot {
+  name Dot15
+  xpos 543
+  ypos 262
+ }
+ Input {
+  inputs 0
+  name Image
+  xpos 238
+  ypos 69
+  number 1
+ }
+ Copy {
+  inputs 2+1
+  from0 rgba.alpha
+  to0 forward.u
+  from1 rgba.alpha
+  to1 forward.v
+  name Copy4
+  xpos 238
+  ypos 243
+ }
+ IDistort {
+  channels rgba
+  uv forward
+  blur_scale 0
+  name IDistort3
+  xpos 238
+  ypos 368
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove2
+  xpos 238
+  ypos 423
+ }
+ Copy {
+  inputs 2+1
+  from0 rgba.alpha
+  to0 forward.u
+  from1 rgba.alpha
+  to1 forward.v
+  name Copy1
+  xpos 239
+  ypos 491
+ }
+ IDistort {
+  channels rgba
+  uv forward
+  blur_scale 0
+  name IDistort1
+  xpos 239
+  ypos 616
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove1
+  xpos 238
+  ypos 673
+ }
+ Copy {
+  inputs 2+1
+  from0 rgba.alpha
+  to0 forward.u
+  from1 rgba.alpha
+  to1 forward.v
+  name Copy2
+  xpos 239
+  ypos 839
+ }
+ IDistort {
+  channels rgba
+  uv forward
+  blur_scale 0
+  name IDistort2
+  xpos 239
+  ypos 964
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove3
+  xpos 238
+  ypos 1021
+ }
+ Copy {
+  inputs 2+1
+  from0 rgba.alpha
+  to0 forward.u
+  from1 rgba.alpha
+  to1 forward.v
+  name Copy3
+  xpos 239
+  ypos 1258
+ }
+ IDistort {
+  channels rgba
+  uv forward
+  blur_scale 0
+  name IDistort4
+  xpos 239
+  ypos 1383
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove4
+  xpos 238
+  ypos 1440
+ }
+ Copy {
+  inputs 2+1
+  from0 rgba.alpha
+  to0 forward.u
+  from1 rgba.alpha
+  to1 forward.v
+  name Copy5
+  xpos 239
+  ypos 1666
+ }
+ IDistort {
+  channels rgba
+  uv forward
+  blur_scale 0
+  name IDistort5
+  xpos 239
+  ypos 1791
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove5
+  xpos 238
+  ypos 1848
+ }
+ Median {
+  inputs 1+1
+  size {{parent.strength}}
+  ignore_top_line false
+  name Median1
+  xpos 238
+  ypos 1966
+ }
+ Output {
+  name Output1
+  xpos 238
+  ypos 2175
+ }
+end_group
